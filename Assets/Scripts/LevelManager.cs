@@ -67,6 +67,13 @@ public class LevelManager : MonoBehaviour
             }
             count.Enabled = false;
 
+            ClearActivations clear = World.Active.GetOrCreateManager<ClearActivations>();
+            clear.Enabled = true;
+            {
+                clear.Update();
+            }
+            clear.Enabled = false;
+            
             Flip flip = World.Active.GetOrCreateManager<Flip>();
             flip.Enabled = true;
             {
@@ -80,13 +87,6 @@ public class LevelManager : MonoBehaviour
         }
         else
         {
-            CountActivations count = World.Active.GetOrCreateManager<CountActivations>();
-            count.Enabled = true;
-            {
-                count.Update();
-            }
-            count.Enabled = false;
-
             Reset reset = World.Active.GetOrCreateManager<Reset>();
             reset.Enabled = true;
             {
