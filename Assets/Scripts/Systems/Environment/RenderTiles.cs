@@ -1,6 +1,5 @@
 ﻿using Components.Activity;
 using Components.Attributes;
-using Components.Supports;
 using Unity.Burst;
 using Unity.Entities;
 using UnityEngine;
@@ -12,7 +11,6 @@ namespace Systems.Activity
     /// defined by Entities with Tile Properties and a Position.
 	/// </summary>
     [UpdateAfter(typeof(TrimGrid))]
-    [UpdateAfter(typeof(RenderBlocks))]
     [UpdateAfter(typeof(Reset))]
     public class RenderTiles : ComponentSystem
 	{
