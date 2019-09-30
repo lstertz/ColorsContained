@@ -10,6 +10,9 @@ public class Bootstrap : MonoBehaviour
 {
     public Material GridTileMaterial;
 
+    public Material MonsterEyes1Material;
+
+
     private void Start()
     {
         SetupRuntimeEnvironment();

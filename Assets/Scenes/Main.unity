@@ -501,6 +501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GridTileMaterial: {fileID: 2100000, guid: b671140078808b64a9fcfa36a846dfb4, type: 2}
+  MonsterEyes1Material: {fileID: 2100000, guid: b50d7bbada6952248b953af805479b64,
+    type: 2}
 --- !u!4 &593214226
 Transform:
   m_ObjectHideFlags: 0
