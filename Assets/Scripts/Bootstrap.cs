@@ -8,18 +8,11 @@ using UnityEngine;
 /// </summary>
 public class Bootstrap : MonoBehaviour
 {
-    public Material BlockMaterial;
-    public Material ShadedBlockMaterial;
-
     public Material GridTileMaterial;
 
     private void Start()
     {
         SetupRuntimeEnvironment();
-
-        BlockMaterial.enableInstancing = true;
-        Resources.BlockMaterial = BlockMaterial;
-        Resources.ShadedBlockMaterial = ShadedBlockMaterial;
 
         GridTileMaterial.enableInstancing = true;
         Resources.GridTileMaterial = GridTileMaterial;

@@ -16,8 +16,5 @@ public static class Resources
 
     public static readonly Color DefaultGridTileColor = new Color(0.8745f, 0.5843f, 0.2784f, 1.0f);
 
-    public static Material BlockMaterial;
-    public static Material ShadedBlockMaterial;
-
     public static Material GridTileMaterial;
 }

@@ -10,7 +10,8 @@ using Unity.Mathematics;
 namespace Systems.Progression
 {
 	/// <summary>
-	/// Defines the Flip System, which swaps all previously empty grid spaces for a Block.
+	/// Defines the Flip System, which swaps tile activation status for all tiles 
+    /// within the user's containing tile space.
 	/// </summary>
     [AlwaysUpdateSystem]
     public class Flip : ComponentSystem

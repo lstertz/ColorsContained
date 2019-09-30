@@ -34,18 +34,13 @@ namespace Entities.Environment
         /// for animation and rendering.</param>
         /// <param name="position">The world position of the created GridCube Entity.</param>
         /// <returns>The created Entity.</returns>
-        public static Entity Create(int requirement, Color type, Color background, 
-            bool isBlockGoal = false)
+        public static Entity Create(int requirement, Color type, Color background)
         {
             Setup.background = background;
             Setup.requirement = requirement;
             Setup.type = type;
 
-            GameObject go;
-            if (isBlockGoal)
-                go = GameObject.Instantiate(Setup.BlockGoalUI);
-            else
-                go = GameObject.Instantiate(Setup.TileGoalUI);
+            GameObject go = GameObject.Instantiate(Setup.TileGoalUI);
 
             go.transform.SetParent(Setup.Parent, false);
             return Create(go);
@@ -54,7 +49,6 @@ namespace Entities.Environment
         public Transform Parent;
 
         public GameObject TileGoalUI;
-        public GameObject BlockGoalUI;
 
         private Color background;
         private int requirement;

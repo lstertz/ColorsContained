@@ -67,6 +67,13 @@ public class LevelManager : MonoBehaviour
             }
             count.Enabled = false;
 
+            ClearActivations clear = World.Active.GetOrCreateManager<ClearActivations>();
+            clear.Enabled = true;
+            {
+                clear.Update();
+            }
+            clear.Enabled = false;
+            
             Flip flip = World.Active.GetOrCreateManager<Flip>();
             flip.Enabled = true;
             {
@@ -76,25 +83,16 @@ public class LevelManager : MonoBehaviour
 
             Systems.Activity.Input.SetDrawRestrictions(drawRestrictions[currentLevel]);
             Goal.Create(goalRequirements[currentLevel],
-                new Color(1, 1, 1, 1), new Color(0.345f, 0.6666f, 0.4509f, 1), false);
+                new Color(1, 1, 1, 1), new Color(0.345f, 0.6666f, 0.4509f, 1));
         }
         else
         {
-            CountActivations count = World.Active.GetOrCreateManager<CountActivations>();
-            count.Enabled = true;
-            {
-                count.Update();
-            }
-            count.Enabled = false;
-
             Reset reset = World.Active.GetOrCreateManager<Reset>();
             reset.Enabled = true;
             {
                 reset.Update(false);
             }
             reset.Enabled = false;
-
-            StartCoroutine(EndSet());
 
             Next.gameObject.SetActive(false);
             Systems.Activity.Input.SetDrawRestrictions(null);
@@ -104,13 +102,6 @@ public class LevelManager : MonoBehaviour
 
     public void JumpToFirstLevel()
     {
-        DestroyBlocks destroyBlocks = World.Active.GetOrCreateManager<DestroyBlocks>();
-        destroyBlocks.Enabled = true;
-        {
-            destroyBlocks.Update();
-        }
-        destroyBlocks.Enabled = false;
-
         Reset reset = World.Active.GetOrCreateManager<Reset>();
         reset.Enabled = true;
         {
@@ -131,7 +122,7 @@ public class LevelManager : MonoBehaviour
 
         Systems.Activity.Input.SetDrawRestrictions(drawRestrictions[currentLevel]);
         Goal.Create(goalRequirements[currentLevel],
-            new Color(1, 1, 1, 1), new Color(0.345f, 0.6666f, 0.4509f, 1), false);
+            new Color(1, 1, 1, 1), new Color(0.345f, 0.6666f, 0.4509f, 1));
     }
 
 
@@ -145,28 +136,9 @@ public class LevelManager : MonoBehaviour
         // Temporarily define the first level on Awake.
         Systems.Activity.Input.SetDrawRestrictions(drawRestrictions[0]);
         Goal.Create(goalRequirements[0], 
-            new Color(1, 1, 1, 1), new Color(0.345f, 0.6666f, 0.4509f, 1), false);
+            new Color(1, 1, 1, 1), new Color(0.345f, 0.6666f, 0.4509f, 1));
 
         Restart.interactable = false;
-    }
-
-    private IEnumerator EndSet()
-    {
-        yield return new WaitForEndOfFrame();
-
-        do
-        {
-            BuildBlocks buildBlocks = World.Active.GetOrCreateManager<BuildBlocks>();
-            buildBlocks.Enabled = true;
-            {
-                buildBlocks.Update();
-            }
-            buildBlocks.Enabled = false;
-
-            yield return new WaitForSeconds(0.5f);
-        }
-        while (!BuildBlocks.AllBlocksBuilt);
-
     }
 
     private IEnumerator PostJump()

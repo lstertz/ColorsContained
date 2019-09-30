@@ -22,6 +22,7 @@ namespace Systems.Progression
             {
                 if (properties.Tileset != Entity.Null)
                     properties.ActivationCount++;
+                // TODO :: Account for different colors of activation.
             });
         }
     }
