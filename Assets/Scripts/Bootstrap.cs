@@ -19,7 +19,10 @@ public class Bootstrap : MonoBehaviour
 
         GridTileMaterial.enableInstancing = true;
         Resources.GridTileMaterial = GridTileMaterial;
-        
+
+        MonsterEyes1Material.enableInstancing = true;
+        Resources.MonsterEyes1Material = MonsterEyes1Material;
+
         PopulateBackground();
         
         Destroy(gameObject);

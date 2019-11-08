@@ -44,11 +44,13 @@ namespace Systems.Activity
             uv = uv
         };
 
-        private static readonly MaterialPropertyBlock propertyBlock =
+        private static readonly MaterialPropertyBlock mainPropertyBlock =
+            new MaterialPropertyBlock();
+        private static readonly MaterialPropertyBlock monsterPropertyBlock =
             new MaterialPropertyBlock();
         #endregion
 
-        
+
         [BurstCompile]
 		protected override void OnUpdate()
 		{
@@ -105,40 +107,73 @@ namespace Systems.Activity
                     tertiary = new Color(1, 1, 1, 1);
                 }
 
-                propertyBlock.SetColor("_MainColor", color);
-                propertyBlock.SetColor("_Primary", primary);
-                propertyBlock.SetColor("_Secondary", secondary);
-                propertyBlock.SetColor("_Tertiary", tertiary);
+                mainPropertyBlock.SetColor("_MainColor", color);
+                mainPropertyBlock.SetColor("_Primary", primary);
+                mainPropertyBlock.SetColor("_Secondary", secondary);
+                mainPropertyBlock.SetColor("_Tertiary", tertiary);
 
                 if (!(properties.IsBeingDrawn && properties.HasDrawnTileToLeft) && 
                     !(!properties.IsBeingDrawn && properties.HasTileToLeft))
-                    propertyBlock.SetColor("_Accent1", accentColor);
+                    mainPropertyBlock.SetColor("_Accent1", accentColor);
                 else
-                    propertyBlock.SetColor("_Accent1", primary);
+                    mainPropertyBlock.SetColor("_Accent1", primary);
 
                 if (!(properties.IsBeingDrawn && properties.HasDrawnTileBehind) &&
                     !(!properties.IsBeingDrawn && properties.HasTileBehind))
-                    propertyBlock.SetColor("_Accent2", accentColor);
+                    mainPropertyBlock.SetColor("_Accent2", accentColor);
                 else
-                    propertyBlock.SetColor("_Accent2", primary);
+                    mainPropertyBlock.SetColor("_Accent2", primary);
 
                 if (!(properties.IsBeingDrawn && properties.HasDrawnTileToRight) &&
                     !(!properties.IsBeingDrawn && properties.HasTileToRight))
-                    propertyBlock.SetColor("_Accent3", accentColor);
+                    mainPropertyBlock.SetColor("_Accent3", accentColor);
                 else
-                    propertyBlock.SetColor("_Accent3", primary);
+                    mainPropertyBlock.SetColor("_Accent3", primary);
 
                 if (!(properties.IsBeingDrawn && properties.HasDrawnTileToForward) &&
                     !(!properties.IsBeingDrawn && properties.HasTileToForward))
-                    propertyBlock.SetColor("_Accent4", accentColor);
+                    mainPropertyBlock.SetColor("_Accent4", accentColor);
                 else
-                    propertyBlock.SetColor("_Accent4", primary);
+                    mainPropertyBlock.SetColor("_Accent4", primary);
 
                 // TODO :: Filter by current Z Axis for better 3D interaction later.
                 //              Perhaps handle in a Job with an added Tag?
 
                 Graphics.DrawMesh(mesh, position.Value, identity,
-                    Resources.GridTileMaterial, 0, camera, 0, propertyBlock);
+                    Resources.GridTileMaterial, 0, camera, 0, mainPropertyBlock);
+
+                monsterPropertyBlock.SetColor("_MainColor", new Color(0, 0, 0, 0));
+                monsterPropertyBlock.SetColor("_Accent1", new Color(0, 0, 0, 0));
+                monsterPropertyBlock.SetColor("_Accent2", new Color(0, 0, 0, 0));
+                monsterPropertyBlock.SetColor("_Accent3", new Color(0, 0, 0, 0));
+                monsterPropertyBlock.SetColor("_Accent4", new Color(0, 0, 0, 0));
+                switch (properties.ActivationCount)
+                {
+                    case 1:
+                        monsterPropertyBlock.SetColor("_Primary", new Color(1, 1, 1, 1));
+                        break;
+                    case 2:
+                        monsterPropertyBlock.SetColor("_Primary", new Color(1, 1, 1, 1));
+                        monsterPropertyBlock.SetColor("_Secondary", new Color(1, 1, 1, 1));
+                        break;
+                    case 3:
+                        monsterPropertyBlock.SetColor("_Primary", new Color(1, 1, 1, 1));
+                        monsterPropertyBlock.SetColor("_Tertiary", new Color(1, 1, 1, 1));
+                        break;
+                    case 4:
+                        monsterPropertyBlock.SetColor("_Primary", new Color(1, 1, 1, 1));
+                        monsterPropertyBlock.SetColor("_Secondary", new Color(1, 1, 1, 1));
+                        monsterPropertyBlock.SetColor("_Tertiary", new Color(1, 1, 1, 1));
+                        break;
+                    default:
+                        monsterPropertyBlock.SetColor("_Primary", new Color(0, 0, 0, 0));
+                        monsterPropertyBlock.SetColor("_Secondary", new Color(0, 0, 0, 0));
+                        monsterPropertyBlock.SetColor("_Tertiary", new Color(0, 0, 0, 0));
+                        break;
+                }
+
+                Graphics.DrawMesh(mesh, position.Value, identity,
+                    Resources.MonsterEyes1Material, 0, camera, 0, monsterPropertyBlock);
             });
         }
     }
